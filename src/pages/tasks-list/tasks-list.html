@@ -1,0 +1,48 @@
+<ion-header primary>
+
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Tarefas</ion-title>
+    
+    <ion-buttons showWhen="ios" end>
+      <button ion-button icon-only (click)="newTask()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  
+  <!-- FAKE -->
+  <ion-list *ngIf="!tasks" class="fake">
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <h3></h3>
+      <p></p>
+    </ion-item>
+  </ion-list>
+  <!--  -->
+
+  <ion-list>
+    <ion-item-sliding #item *ngFor="let task of tasks">
+      <ion-item (click)="showTask(task)">
+        <h3>#{{ task.id }} - {{task.title }}</h3>
+        <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
+          Transferir</button>
+        <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
+          Apagar</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab showWhen="android" bottom right>
+    <button (click)="newTask()" ion-fab><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

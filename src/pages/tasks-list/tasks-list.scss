@@ -1,0 +1,15 @@
+page-tasks-list {
+    
+    .fake {
+        h3 {
+            background: map-get($colors , light);
+            height: 26px;
+            width: 40%;
+        }
+        p {
+            background: map-get($colors , light);
+            height: 10px;
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,62 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Nova Tarefa</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="todo" (ngSubmit)="save()">
+    <ion-item>
+      <ion-label stacked>Título da Tarefa</ion-label>
+      <ion-input type="text" formControlName="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked><ion-icon name="folder-open"></ion-icon> Projeto</ion-label>
+      <ion-select formControlName="project_id">
+        <ion-option *ngFor="let project of projects" value="{{ project.id }}">
+          {{ project.name }} 
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked><ion-icon name="bookmark"></ion-icon> Tipo</ion-label>
+      <ion-select formControlName="category_id">
+        <ion-option *ngFor="let category of categories" value="{{ category.id }}">
+          {{ category.name }} 
+        </ion-option>
+      </ion-select>
+    </ion-item>  
+    <ion-row> 
+      <ion-col>
+        <ion-item>
+          <ion-label stacked><ion-icon name="calendar"></ion-icon> Data de início</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="start_at"></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked><ion-icon name="calendar"></ion-icon> Conclusão</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="estimate_at"></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-item>
+        <ion-label stacked>Descrição</ion-label>
+        <ion-textarea formControlName="description" placeholder="Informe o objetivo da tarefa, instruções, etc."></ion-textarea>
+      </ion-item>
+      <ion-col>
+          <ion-item>
+            <ion-label stacked>Tempo estimado de trabalho (minutos)</ion-label> 
+            <ion-range min="5" max="360" formControlName="estimate_min" [(ngModel)]="hourTask" color="primary">
+              <ion-label range-left>60</ion-label>
+              <ion-label range-right>360</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+    </ion-row>
+    <button ion-button block type="submit" [disabled]="!todo.valid">Salvar</button>
+  </form>
+</ion-content>
