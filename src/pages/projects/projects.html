@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Projetos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  
+  <!-- FAKE -->
+  <ion-list *ngIf="!projects" class="fake">
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <h3></h3>
+      <p></p>
+    </ion-item>
+  </ion-list>
+  <!--  -->
+
+  <ion-list *ngIf="projects">
+    <ion-item *ngFor="let project of projects">
+      <h3>{{ project.name }}</h3>
+      <p> {{ project.description }}</p>
+    </ion-item>
+  </ion-list>  
+
+</ion-content>

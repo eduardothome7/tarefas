@@ -19,9 +19,11 @@ export class TaskShowPage {
               private _toast :ToastController) {
     this.task = this.navParams.get("task");
     this.historics = this.task.historics;
+    this.fetch();            
   }
 
   ionViewDidLoad() {
+    
   }
 
   async play(){
@@ -36,6 +38,15 @@ export class TaskShowPage {
     }catch (error) {
 
     }
+  }
+
+  fetch(){
+    const result :any = this._provider.getById(this.task.id)
+    .then((result :Task) => {
+      this.task = result;
+    }).catch(error => {
+      console.log("error");
+    });
   }
 
 }

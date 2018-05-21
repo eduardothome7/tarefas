@@ -14,7 +14,7 @@
   <p>{{ task.description }}</p>
   <h4>Histórico</h4>
   <ion-list>
-    <ion-item *ngFor="let historic of historics">
+    <ion-item *ngFor="let historic of task.historics">
       <p>{{ historic.toString() }}</p>
     </ion-item>
     <ion-item>

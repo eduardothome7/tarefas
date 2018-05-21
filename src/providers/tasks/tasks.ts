@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../../model/task';
+import { DateTime } from 'ionic-angular';
 
 @Injectable()
 export class TasksProvider {
@@ -23,10 +24,12 @@ export class TasksProvider {
 		});
   }
 
-  play(id: number){
+  play(task_id: number){
     return new Promise((resolve, reject) => {
       const url = this.API_URL + "/tasks/play_pause";
-      const data = {"id":id};
+      let data = [
+                  { "id":task_id }
+                ];
     
       this.http.put(url, data)
         .subscribe((result :any) => {
@@ -37,10 +40,20 @@ export class TasksProvider {
     });
   }
 
-  getBy(id: number){
+  getById(id: number){
+    return new Promise((resolve, reject) => {
+			const url = this.API_URL + '/tasks/'+id+'.json';
 
+			this.http.get(url)
+				.subscribe((result: any) => {
+					resolve(result);
+				}, (error) => {
+					reject(error);
+				});
+		});
   }
-  create(task: Task){
+
+  create(task: any){
     return new Promise((resolve, reject) => {
       const url = this.API_URL + "/tasks";
       const data = task;
@@ -65,6 +78,18 @@ export class TasksProvider {
 		});
   }
 
+  getStatus(){
+    return new Promise((resolve, reject) => {
+			const url = this.API_URL + '/statuses.json';
+			this.http.get(url)
+				.subscribe((result: any) => {
+					resolve(result);
+				}, (error) => {
+					reject(error);
+				});
+		});
+  }
+
   getProjects(){
     return new Promise((resolve, reject) => {
 			const url = this.API_URL + '/projects.json';
@@ -75,6 +100,16 @@ export class TasksProvider {
 					reject(error);
 				});
 		});
+  }
+
+  login(login :any){
+    let now :string = new Date().toISOString();
+    let session : any = [{
+                          id:1,
+                          user_id:7,
+                          token: '38093820432'
+                        }];
+    return session;
   }
 
   update(){

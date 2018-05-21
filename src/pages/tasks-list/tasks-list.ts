@@ -11,10 +11,12 @@ import { Task } from '../../model/task';
 export class TasksListPage {
 
   tasks: Task[];
+  status;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private _provider: TasksProvider) {
+    this.status = "opened";
   }
 
   ionViewDidLoad() {

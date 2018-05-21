@@ -6,19 +6,48 @@
     </button>
 
     <ion-title>Tarefas</ion-title>
-    
+      
     <ion-buttons showWhen="ios" end>
       <button ion-button icon-only (click)="newTask()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
-    
   </ion-navbar>
+      
+  <ion-toolbar>
+    <ion-segment>
+      <ion-segment-button value="my">
+        Minhas
+      </ion-segment-button>
+      <ion-segment-button value="by">
+        Que abri
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        Equipe
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 
 <ion-content>
+  <!-- FAKE -->
+  <div *ngIf="!tasks" class="fake">
+    <ion-segment-button value="fake"></ion-segment-button>
+    <ion-segment-button value="fake"></ion-segment-button>
+  </div>
+  <!-- -->
   
+  <ion-segment *ngIf="tasks" [(ngModel)]="status">      
+    <ion-segment-button value="opened">
+      Abertas
+    </ion-segment-button>
+    <ion-segment-button value="closed">
+      Entregues
+    </ion-segment-button>
+  </ion-segment>
+
   <!-- FAKE -->
   <ion-list *ngIf="!tasks" class="fake">
     <ion-item *ngFor="let i of [1,2,3,4,5]">
@@ -28,20 +57,28 @@
   </ion-list>
   <!--  -->
 
-  <ion-list>
-    <ion-item-sliding #item *ngFor="let task of tasks">
-      <ion-item (click)="showTask(task)">
+  <div [ngSwitch]="status" *ngIf="tasks">
+    <ion-list selected="true" *ngSwitchCase="'opened'">
+      <ion-item-sliding #item *ngFor="let task of tasks">
+        <ion-item (click)="showTask(task)">
+          <h3>#{{ task.id }} - {{task.title }}</h3>
+          <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
+            Transferir</button>
+          <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
+            Apagar</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    <ion-list *ngSwitchCase="'closed'">
+      <ion-item *ngFor="let task of tasks" (click)="showTask(task)">
         <h3>#{{ task.id }} - {{task.title }}</h3>
         <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
       </ion-item>
-      <ion-item-options side="right">
-        <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
-          Transferir</button>
-        <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
-          Apagar</button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+    </ion-list>
+  </div>
   <ion-fab showWhen="android" bottom right>
     <button (click)="newTask()" ion-fab><ion-icon name="add"></ion-icon></button>
   </ion-fab>
