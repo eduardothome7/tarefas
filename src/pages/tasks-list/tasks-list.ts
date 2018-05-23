@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TasksProvider } from '../../providers/tasks/tasks';
 import { Task } from '../../model/task';
+import { AuthProvider } from '../../providers/session/auth';
 
 @IonicPage()
 @Component({
@@ -15,8 +16,10 @@ export class TasksListPage {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
-              private _provider: TasksProvider) {
+              private _provider: TasksProvider, 
+              private _authProvider :AuthProvider) {
     this.status = "opened";
+    console.log(this._authProvider.getSession());
   }
 
   ionViewDidLoad() {

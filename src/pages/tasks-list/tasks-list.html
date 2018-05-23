@@ -62,7 +62,7 @@
       <ion-item-sliding #item *ngFor="let task of tasks">
         <ion-item (click)="showTask(task)">
           <h3>#{{ task.id }} - {{task.title }}</h3>
-          <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
+          <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
         </ion-item>
         <ion-item-options side="right">
           <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>

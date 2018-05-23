@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Equipes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <!-- FAKE -->
+  <ion-list *ngIf="!teams" class="fake">
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <h3></h3>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </ion-item>
+  </ion-list>
+  <!--  -->
+  <ion-list *ngIf="teams">
+    <ion-item *ngFor="let team of teams">
+      <h3>{{ team.name }}</h3>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>

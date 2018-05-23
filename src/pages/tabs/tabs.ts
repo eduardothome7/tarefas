@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class TabsPage {
   tab1Root = "TasksListPage";
   tab2Root = "ProjectsPage";
-  tab3Root = "TasksListPage";
+  tab3Root = "TeamPage";
 
   constructor() {
   }

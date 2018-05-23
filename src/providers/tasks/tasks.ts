@@ -27,9 +27,7 @@ export class TasksProvider {
   play(task_id: number){
     return new Promise((resolve, reject) => {
       const url = this.API_URL + "/tasks/play_pause";
-      let data = [
-                  { "id":task_id }
-                ];
+      let data = JSON.stringify({"id":task_id });
     
       this.http.put(url, data)
         .subscribe((result :any) => {
@@ -102,14 +100,16 @@ export class TasksProvider {
 		});
   }
 
-  login(login :any){
-    let now :string = new Date().toISOString();
-    let session : any = [{
-                          id:1,
-                          user_id:7,
-                          token: '38093820432'
-                        }];
-    return session;
+  getTeams(){
+    return new Promise((resolve, reject) => {
+			const url = this.API_URL + '/teams.json';
+			this.http.get(url)
+				.subscribe((result: any) => {
+					resolve(result);
+				}, (error) => {
+					reject(error);
+				});
+		});
   }
 
   update(){
