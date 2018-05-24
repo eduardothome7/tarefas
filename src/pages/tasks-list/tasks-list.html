@@ -1,20 +1,16 @@
-<ion-header primary>
-
-  <ion-navbar>
+<ion-header>
+  <ion-navbar color="primary">
     <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-
     <ion-title>Tarefas</ion-title>
-      
     <ion-buttons showWhen="ios" end>
       <button ion-button icon-only (click)="newTask()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-      
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-segment>
       <ion-segment-button value="my">
         Minhas
@@ -27,16 +23,14 @@
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-
 </ion-header>
-
 
 <ion-content>
   <!-- FAKE -->
-  <div *ngIf="!tasks" class="fake">
+  <ion-segment *ngIf="!tasks" class="fake">
     <ion-segment-button value="fake"></ion-segment-button>
     <ion-segment-button value="fake"></ion-segment-button>
-  </div>
+  </ion-segment>
   <!-- -->
   
   <ion-segment *ngIf="tasks" [(ngModel)]="status">      
@@ -53,31 +47,47 @@
     <ion-item *ngFor="let i of [1,2,3,4,5]">
       <h3></h3>
       <p></p>
+      <div class="progress"></div>
     </ion-item>
   </ion-list>
   <!--  -->
 
-  <div [ngSwitch]="status" *ngIf="tasks">
-    <ion-list selected="true" *ngSwitchCase="'opened'">
-      <ion-item-sliding #item *ngFor="let task of tasks">
-        <ion-item (click)="showTask(task)">
+  <div [ngSwitch]="status" *ngIf="tasks || tasksClosed">
+    <div selected="true" *ngSwitchCase="'opened'">
+      <ion-list>
+        <ion-item-sliding #item *ngFor="let task of tasks">
+          <ion-item (click)="showTask(task)">
+            <h3>#{{ task.id }} - {{task.title }} - {{ task.project.name }}</h3>
+            <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
+            <div class="progress"><div class="bar" style='width: 40%'></div></div>
+          </ion-item>
+          <ion-item-options side="right">
+            <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
+              Transferir</button>
+            <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
+              Apagar</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+      <div padding *ngIf="tasks && !tasks.length > 0">
+        <img class="mid center" src="/assets/imgs/chair.svg">
+        <p class="center light">Nenhuma tarefa aberta</p>
+      </div>
+    </div>
+    
+    <div *ngSwitchCase="'closed'">
+      <ion-list>
+        <ion-item *ngFor="let task of tasksClosed" (click)="showTask(task)">
           <h3>#{{ task.id }} - {{task.title }}</h3>
-          <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
+          <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
         </ion-item>
-        <ion-item-options side="right">
-          <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
-            Transferir</button>
-          <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
-            Apagar</button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-    <ion-list *ngSwitchCase="'closed'">
-      <ion-item *ngFor="let task of tasks" (click)="showTask(task)">
-        <h3>#{{ task.id }} - {{task.title }}</h3>
-        <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
-      </ion-item>
-    </ion-list>
+      </ion-list>
+      <div padding *ngIf="!tasksClosed">
+        <img class="mid center" src="/assets/imgs/chair.svg">
+        <p class="center light">Nenhuma tarefa encerrada</p>
+      </div>
+    </div>
+
   </div>
   <ion-fab showWhen="android" bottom right>
     <button (click)="newTask()" ion-fab><ion-icon name="add"></ion-icon></button>

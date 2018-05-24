@@ -12,6 +12,7 @@ import { AuthProvider } from '../../providers/session/auth';
 export class TasksListPage {
 
   tasks: Task[];
+  tasksClosed: Task[];
   status;
 
   constructor(public navCtrl: NavController, 
@@ -19,15 +20,26 @@ export class TasksListPage {
               private _provider: TasksProvider, 
               private _authProvider :AuthProvider) {
     this.status = "opened";
-    console.log(this._authProvider.getSession());
+    // console.log(this._authProvider.getSession());
   }
 
   ionViewDidLoad() {
     this.fetchAll();
+    this.fetchAllClosed();
   }
-
+  
   async fetchAll(){
-    const result :any = await this._provider.getAll();
+    const result :any = await this._provider.getAll('opened');
+    
+    try {
+      this.tasks = result;
+    } catch (error) {
+      console.log("Erro");
+    }
+  }
+  
+  async fetchAllClosed(){
+    const result :any = await this._provider.getAll('closed');
 
     try {
       this.tasks = result;

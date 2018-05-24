@@ -42,21 +42,21 @@ export class LoginPage {
 
     try {
       console.log("login: "+result);
-      // let session :SessionAuth = result;
-      // console.log(session);
-      // this.storage.set('local_session_auth', session);
-      // this.navCtrl.push("TabsPage");
+      let session :SessionAuth = result;
+      console.log(session);
+      this.storage.set('local_session_auth', session);
+      this.navCtrl.push("TabsPage");
     } catch(error){
       console.log(error);
     }
   }
 
   autorize(){
-    // if(this.storage.get('local_session_auth')){
-    //   this.navCtrl.push("TabsPage");
-    // } else {
-      // setTimeout(() => this.splash = false, 4000);
-    // }    
+    if(this.storage.get('local_session_auth')){
+      this.navCtrl.push("TabsPage");
+    } else {
+      setTimeout(() => this.splash = false, 4000);
+    }    
   }
 }
 
