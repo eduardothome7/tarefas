@@ -5,7 +5,7 @@ import { DateTime } from 'ionic-angular';
 
 @Injectable()
 export class TasksProvider {
-  private API_URL = "http://minhastarefasapiv1.herokuapp.com";
+  private API_URL = "http://localhost:3000";
 
   constructor(public http: HttpClient) {
     
@@ -51,15 +51,13 @@ export class TasksProvider {
 		});
   }
 
-  create(task: any){
+  create(task){
     return new Promise((resolve, reject) => {
-      const url = this.API_URL + "/tasks";
-      const data = task;
-      this.http.post(url, data)
+      this.http.post(`${this.API_URL}/tasks.json`, task)
       .subscribe((result :any) => {
         resolve(result);
-      }, (error) => {
-        reject(error);
+      }, (err :any) => {
+        reject(err.error);
       });
     });
   }

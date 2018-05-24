@@ -29,8 +29,8 @@ export class TaskNewPage {
       description: [''],
       category_id: [10, Validators.required],
       project_id: [7, Validators.required],
-      start_at: [ Validators.required],
-      estimate_at: [ Validators.required],
+      start_at: ['', Validators.required],
+      estimate_at: ['', Validators.required],
       estimate_min: [60, Validators.required]
     });
   }
@@ -64,14 +64,14 @@ export class TaskNewPage {
       "estimate_min": this.todo.value.estimate_min
     }];
 
-    console.log(task);
-
-    // const result = await this._provider.create(task);
+    const result :any = await this._provider.create(task);
     
-    // try {
-      // console.log("Ok");
-    // } catch(error){
-      // console.log("Erro:"+error);
-    // }
+    try {
+      result.forEach(function (k, value) {
+        console.log(value);
+      }); 
+    } catch(error){
+      console.log(error);
+    }
   }
 }
