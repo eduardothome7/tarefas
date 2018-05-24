@@ -11,7 +11,7 @@ page-tasks-list {
         background: darken(map-get($colors , light), 4%);
 
         .bar {
-            background: map-get($colors, primary);
+            background: map-get($colors, secondary);
             height: 4px;
             // width: 40%;
         }

@@ -17,12 +17,15 @@ page-task-show {
         color: lighten(map-get($colors, primary), 28%);
         // font-weight: bold;
     }
+
     
     // ion-col.divider {
         
     // }
+   
     // ion-row {}
     ion-col.divider.right {
         border-right: 2px solid lighten(map-get($colors, primary), 2%);
     }
+    
 }
