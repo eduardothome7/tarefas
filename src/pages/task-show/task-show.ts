@@ -15,7 +15,7 @@ export class TaskShowPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private _provider: TasksProvider,
-              private _toast :ToastController) {
+              private toastController :ToastController) {
     this.task = this.navParams.get("task");
     this.fetch();            
   }
@@ -24,18 +24,26 @@ export class TaskShowPage {
     
   }
 
-  async play(){
-    const result :any = await this._provider.play(this.task.id);
-      
-    try {
-      console.log(result);
-      let message:string = (result.playing) ? "Tarefa startada com sucesso" : "Tarefa pausada com sucesso"; 
-      this._toast.create({
-        message: message
-      }); 
-    } catch (error) {
-      console.log(error);
-    }
+  play(){
+    const result :any = this._provider.play(this.task.id)
+    .then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+      this.toastController.create({
+        message: 'erro ao abrir tarefa'
+      }).present();
+    });
+
+    // try {
+    //   console.log(result);
+    //   let message:string = (result.playing) ? "Tarefa startada com sucesso" : "Tarefa pausada com sucesso"; 
+    //   this._toast.create({
+    //     message: message
+    //   }); 
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   fetch(){

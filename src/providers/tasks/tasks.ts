@@ -6,6 +6,7 @@ import { DateTime } from 'ionic-angular';
 @Injectable()
 export class TasksProvider {
   private API_URL = "http://localhost:3000";
+  // private API_URL = "http://minhastarefasapiv1.herokuapp.com";
 
   constructor(public http: HttpClient) {
     
@@ -26,10 +27,8 @@ export class TasksProvider {
 
   play(task_id: number){
     return new Promise((resolve, reject) => {
-      const url = this.API_URL + "/tasks/play_pause";
-      let data = JSON.stringify({"id":task_id });
-    
-      this.http.put(url, data)
+			const url = `${this.API_URL}/tasks/play_pause`;
+      this.http.put(url, {id: task_id},{headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .subscribe((result :any) => {
           resolve(result);
         }, (error) => {
@@ -51,7 +50,6 @@ export class TasksProvider {
 		});
   }
 
-<<<<<<< HEAD
   create(task){
     return new Promise((resolve, reject) => {
       this.http.post(`${this.API_URL}/tasks.json`, task)
@@ -59,15 +57,6 @@ export class TasksProvider {
         resolve(result);
       }, (err :any) => {
         reject(err.error);
-=======
-  create(data){
-    return new Promise((resolve, reject) => {
-      this.http.post(`${this.API_URL}/tasks.json`, data)
-      .subscribe((result :any) => {
-        resolve(result);
-      }, (error: any) => {
-        reject(error);
->>>>>>> 1598f6b8299fcaa95883f12b2c6e375655b38d53
       });
     });
   }
@@ -78,8 +67,8 @@ export class TasksProvider {
 			this.http.get(url)
 				.subscribe((result: any) => {
 					resolve(result);
-				}, (error) => {
-					reject(error);
+				}, (err) => {
+					reject(err);
 				});
 		});
   }

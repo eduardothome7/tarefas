@@ -4,12 +4,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Projetos</ion-title>
+    <ion-buttons showWhen="ios" end>
+      <button ion-button icon-only (click)="newProject()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-  <ion-buttons showWhen="ios" end>
-    <button ion-button icon-only (click)="newProject()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </ion-buttons>
 </ion-header>
 <ion-content>
   

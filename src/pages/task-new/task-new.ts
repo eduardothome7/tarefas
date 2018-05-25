@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, stringify } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TasksProvider } from '../../providers/tasks/tasks';
 import { Task } from '../../model/task';
@@ -18,7 +18,8 @@ export class TaskNewPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               private formBuilder: FormBuilder,
-              private _provider: TasksProvider) {
+              private _provider: TasksProvider,
+              private toastController: ToastController) {
     
     // carrega lista de categorias da API
     this.fetchCategories();    
@@ -53,7 +54,7 @@ export class TaskNewPage {
     });
   }
 
-  async save(){
+  save(){
     let data = [{
       title: this.todo.value.title,
       description: this.todo.value.description,
@@ -64,23 +65,14 @@ export class TaskNewPage {
       estimate_min: this.todo.value.estimate_min
     }];
 
-<<<<<<< HEAD
-    const result :any = await this._provider.create(task);
-    
-    try {
-      result.forEach(function (k, value) {
-        console.log(value);
-      }); 
-    } catch(error){
-      console.log(error);
-=======
-    const result = await this._provider.create(data);
-    
-    try {
-      console.log("Ok");
-    } catch(error){
-      console.log("Erro:"+error);
->>>>>>> 1598f6b8299fcaa95883f12b2c6e375655b38d53
-    }
+    const result = this._provider.create(data)
+    .then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+      this.toastController.create({
+        message: 'erro ao abrir tarefa'
+      }).present();
+    });    
   }
 }

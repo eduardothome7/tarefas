@@ -1,12 +1,9 @@
 
 <ion-header>
-
   <ion-navbar>
     <ion-title>Nova Tarefa</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <form [formGroup]="todo" (ngSubmit)="save()">
@@ -57,6 +54,6 @@
           </ion-item>
         </ion-col>
     </ion-row>
-    <button ion-button block type="submit" [disabled]="!todo.valid">Salvar</button>
+    <button ion-button block type="submit" color="secondary" [disabled]="!todo.valid">Salvar</button>
   </form>
 </ion-content>
