@@ -1,11 +1,15 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Projetos</ion-title>
   </ion-navbar>
-
+  <ion-buttons showWhen="ios" end>
+    <button ion-button icon-only (click)="newProject()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-header>
 <ion-content>
   
@@ -13,6 +17,7 @@
   <ion-list *ngIf="!projects" class="fake">
     <ion-item *ngFor="let i of [1,2,3,4,5]">
       <h3></h3>
+      <ion-badge color="light" item-end>&nbsp;</ion-badge>      
       <p></p>
     </ion-item>
   </ion-list>
@@ -21,8 +26,12 @@
   <ion-list *ngIf="projects">
     <ion-item *ngFor="let project of projects">
       <h3>{{ project.name }}</h3>
+      <ion-badge color="secondary" item-end><ion-icon name="list"></ion-icon> {{ project.tasks.length }}</ion-badge>
       <p> {{ project.description }}</p>
+      <p> <ion-icon name="people"></ion-icon> {{ project.team.name }}</p>
     </ion-item>
-  </ion-list>  
-
+  </ion-list> 
+  <ion-fab showWhen="android" bottom right>
+    <button (click)="newProject()" ion-fab><ion-icon name="add"></ion-icon></button>
+  </ion-fab>  
 </ion-content>

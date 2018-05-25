@@ -1,29 +1,49 @@
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Equipes</ion-title>
   </ion-navbar>
+  <ion-buttons showWhen="ios" end>
+    <button ion-button icon-only (click)="newTeam()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-buttons>
 
 </ion-header>
 
 
 <ion-content>
   <!-- FAKE -->
-  <ion-list *ngIf="!teams" class="fake">
-    <ion-item *ngFor="let i of [1,2,3,4,5]">
-      <h3></h3>
-      <p></p>
-      <p></p>
-      <p></p>
-      <p></p>
+  <ion-item-group *ngIf="!teams" class="fake">
+    <ion-item-divider><h3></h3>
+      <ion-badge color="light" item-end>&nbsp;</ion-badge>
+      <ion-badge color="light" item-end>&nbsp;</ion-badge>
+    </ion-item-divider>
+    <ion-item *ngFor="let i of [1,2,3]">
+      <ion-avatar item-start>
+      </ion-avatar>
+      <h3></h3> 
       <p></p>
     </ion-item>
-  </ion-list>
+  </ion-item-group>
   <!--  -->
-  <ion-list *ngIf="teams">
-    <ion-item *ngFor="let team of teams">
-      <h3>{{ team.name }}</h3>
-    </ion-item>
-  </ion-list>
   
+  <ion-item-group *ngFor="let team of teams">
+    <ion-item-divider>{{ team.name }}
+      <ion-badge color="primary" item-end><ion-icon name="folder-open"></ion-icon> {{ team.projects.length }}</ion-badge>
+      <ion-badge color="secondary" item-end><ion-icon name="list"></ion-icon> {{ team.tasks.length }}</ion-badge>
+    </ion-item-divider>
+    <ion-item *ngFor="let user of team.users">
+      <ion-avatar item-start>
+        <img src="data:image/png;base64,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">
+      </ion-avatar>
+      <h3>{{ user.name }}</h3> 
+      <p>{{ user.email }}</p>
+    </ion-item>
+  </ion-item-group>
+  <ion-fab showWhen="android" bottom right>
+    <button (click)="newTeam()" ion-fab><ion-icon name="add"></ion-icon></button>
+  </ion-fab>  
 </ion-content>

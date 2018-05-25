@@ -11,14 +11,12 @@ import { TasksProvider } from '../../providers/tasks/tasks';
 export class TaskShowPage {
   
   task :Task;
-  historics: History[] = [];
   
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private _provider: TasksProvider,
               private _toast :ToastController) {
     this.task = this.navParams.get("task");
-    this.historics = this.task.historics;
     this.fetch();            
   }
 
@@ -35,8 +33,8 @@ export class TaskShowPage {
       this._toast.create({
         message: message
       }); 
-    }catch (error) {
-
+    } catch (error) {
+      console.log(error);
     }
   }
 

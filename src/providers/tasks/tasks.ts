@@ -11,9 +11,9 @@ export class TasksProvider {
     
   }
 
-  getAll(){
+  getAll(status){
     return new Promise((resolve, reject) => {
-			const url = this.API_URL + '/tasks.json';
+			const url = `${this.API_URL}/tasks.json?status=${status}`;
 
 			this.http.get(url)
 				.subscribe((result: any) => {
@@ -51,6 +51,7 @@ export class TasksProvider {
 		});
   }
 
+<<<<<<< HEAD
   create(task){
     return new Promise((resolve, reject) => {
       this.http.post(`${this.API_URL}/tasks.json`, task)
@@ -58,6 +59,15 @@ export class TasksProvider {
         resolve(result);
       }, (err :any) => {
         reject(err.error);
+=======
+  create(data){
+    return new Promise((resolve, reject) => {
+      this.http.post(`${this.API_URL}/tasks.json`, data)
+      .subscribe((result :any) => {
+        resolve(result);
+      }, (error: any) => {
+        reject(error);
+>>>>>>> 1598f6b8299fcaa95883f12b2c6e375655b38d53
       });
     });
   }

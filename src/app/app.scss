@@ -9,5 +9,38 @@
         height: 10px;
         width: 100%;
     }
+    ion-segment-button {
+        width: 100%;
+    }
 }
 
+ion-icon {
+    &[class*="custom-chair"] {
+        mask-size: contain;
+        mask-position: 50% 50%;
+        mask-repeat: no-repeat;
+        background: currentColor;
+        width: 1em;
+        height: 1em;
+    }
+
+    &[class*="custom-chair"] {
+        mask-image: url(../assets/imgs/chair.svg);
+    }
+}
+
+img.mid {
+    width: 50%;
+}
+img.center {
+    margin-left: 20%;
+}
+ion-header.header-banner {
+    // background: purple;
+}
+ion-toolbar.toolbar-md-primary ion-segment-button {
+    color: #fff !important;
+}
+p.white {
+    color: #fff;
+}

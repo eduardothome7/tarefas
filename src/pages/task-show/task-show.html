@@ -1,29 +1,40 @@
-<ion-header primary>
-
-  <ion-navbar>
-    <ion-title>{{ task.title }}</ion-title>
+<ion-header no-border>
+  <ion-navbar color="primary">
+    <ion-title></ion-title>
   </ion-navbar>
-
+  <ion-toolbar class="info" padding color="primary">
+    <ion-row>
+      <ion-col text-center class="divider right">
+        <ion-icon name="calendar"></ion-icon>
+        <p>Início</p>
+        <p>{{ task.start_at | date: 'dd/MM'}}</p>
+      </ion-col>
+      <ion-col text-center>
+        <ion-icon name="calendar"></ion-icon>
+        <p>Entrega</p>
+        <p>{{ task.estimate_at | date: 'dd/MM'}}</p>
+      </ion-col>
+    </ion-row>
+    <div class="progress"><div class="bar"></div></div>
+    <ion-row>
+        <ion-col>
+          <p class="white"><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
+        </ion-col>
+        <ion-col>
+          <p class="white"><ion-icon name="bookmark"></ion-icon> {{ task.category.name }}</p>
+        </ion-col>
+      </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
-  <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
-  <p><ion-icon name="calendar"></ion-icon> Data de Entrega: {{ task.estimate_at | date: 'dd/MM'}}</p>
-  <h4>Descrição da Tarefa</h4>
+<ion-content fullscreen padding>
+  <h3>{{ task.title }}</h3>
   <p>{{ task.description }}</p>
-  <h4>Histórico</h4>
-  <ion-list>
-    <ion-item *ngFor="let historic of task.historics">
-      <p>{{ historic.toString() }}</p>
-    </ion-item>
-    <ion-item>
-      <p><ion-icon name="calendar"></ion-icon> Tarefa criada em: {{ task.created_at | date: 'dd/MM HH:mm'}}</p>
-    </ion-item>
-  </ion-list>
   <ion-fab bottom right>
-    <button ion-fab (click)="play()">
+    <button ion-fab color="{{ (!task.playing) ?  'secondary' : 'primary' }}" (click)="play()">
       <ion-icon name="{{ (!task.playing) ?  'play' : 'pause' }}"></ion-icon>
     </button>
   </ion-fab>
 </ion-content>
+

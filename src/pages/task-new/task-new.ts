@@ -54,16 +54,17 @@ export class TaskNewPage {
   }
 
   async save(){
-    let task :any = [{
-      "title": this.todo.value.title,
-      "description": this.todo.value.description,
-      "category_id": this.todo.value.category_id,
-      "project_id": this.todo.value.project_id,
-      "start_at": new Date(this.todo.value.start_at).toISOString(),
-      "estimate_at": new Date(this.todo.value.start_at).toISOString(),
-      "estimate_min": this.todo.value.estimate_min
+    let data = [{
+      title: this.todo.value.title,
+      description: this.todo.value.description,
+      category_id: this.todo.value.category_id,
+      project_id: this.todo.value.project_id,
+      start_at: new Date(this.todo.value.start_at).toISOString(),
+      estimate_at: new Date(this.todo.value.start_at).toISOString(),
+      estimate_min: this.todo.value.estimate_min
     }];
 
+<<<<<<< HEAD
     const result :any = await this._provider.create(task);
     
     try {
@@ -72,6 +73,14 @@ export class TaskNewPage {
       }); 
     } catch(error){
       console.log(error);
+=======
+    const result = await this._provider.create(data);
+    
+    try {
+      console.log("Ok");
+    } catch(error){
+      console.log("Erro:"+error);
+>>>>>>> 1598f6b8299fcaa95883f12b2c6e375655b38d53
     }
   }
 }

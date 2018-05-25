@@ -1,4 +1,5 @@
 import { DateTime } from "ionic-angular";
+import { Historic } from "./historic";
 
 export class Task {
     id: number;
@@ -12,9 +13,9 @@ export class Task {
     estimate_min: number;
     priority: number;
     project: any[];
-    team: number;
     playing: boolean;
-    historics: any[];
+    historics: Historic[];
     created_at: DateTime;
     updated_at:DateTime;
+
 }

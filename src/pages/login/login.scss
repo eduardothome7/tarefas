@@ -11,7 +11,7 @@ page-login {
     }
       
     .flb {
-        background-color: #3ebffb;
+        background-color: map-get($colors, primary);
         height:100%;
         width:100%;
         animation: pulse 1s linear forwards;
