@@ -1,25 +1,3 @@
 page-tasks-list {
-    
-    .segment-ios .segment-button {
-        margin-bottom: 2px;
-    }
-
-    .progress {
-        margin-top: 1.4pc;
-        width: 100%;
-        border-radius: 3px;
-        background: darken(map-get($colors , light), 4%);
-
-        .bar {
-            background: map-get($colors, secondary);
-            height: 4px;
-            // width: 40%;
-        }
-    }
-    .center {
-        text-align: center;
-    }
-    .light {
-        color: #555;
-    }
+   
 }

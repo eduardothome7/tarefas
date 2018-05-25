@@ -13,14 +13,15 @@ export class TasksListPage {
 
   tasks: Task[];
   tasksClosed: Task[];
-  status;
+  status :string;
+  section :string;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private _provider: TasksProvider, 
               private _authProvider :AuthProvider) {
     this.status = "opened";
-    // console.log(this._authProvider.getSession());
+    this.section = "my";
   }
 
   ionViewDidLoad() {

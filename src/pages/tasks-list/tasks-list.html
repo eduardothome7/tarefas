@@ -11,8 +11,8 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar color="primary">
-    <ion-segment>
-      <ion-segment-button value="my">
+    <ion-segment [(ngModel)]="section">
+      <ion-segment-button selected="true" value="my">
         Minhas
       </ion-segment-button>
       <ion-segment-button value="by">
@@ -51,44 +51,52 @@
     </ion-item>
   </ion-list>
   <!--  -->
-
-  <div [ngSwitch]="status" *ngIf="tasks || tasksClosed">
-    <div selected="true" *ngSwitchCase="'opened'">
-      <ion-list>
-        <ion-item-sliding #item *ngFor="let task of tasks">
-          <ion-item (click)="showTask(task)">
-            <h3>#{{ task.id }} - {{task.title }} - {{ task.project.name }}</h3>
-            <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
-            <div class="progress"><div class="bar" style='width: 40%'></div></div>
-          </ion-item>
-          <ion-item-options side="right">
-            <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
-              Transferir</button>
-            <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
-              Apagar</button>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-      <div padding *ngIf="tasks && !tasks.length > 0">
-        <img class="mid center" src="/assets/imgs/chair.svg">
-        <p class="center light">Nenhuma tarefa aberta</p>
+  <div [ngSwitch]="section">
+    <div selected="true" *ngSwitchCase="'my'">
+      <!-- MY -->
+      <div [ngSwitch]="status" *ngIf="tasks || tasksClosed">
+        <div selected="true" *ngSwitchCase="'opened'">
+          <ion-list>
+            <ion-item-sliding #item *ngFor="let task of tasks">
+              <ion-item (click)="showTask(task)">
+                <span *ngIf="task.playing" class="pulse">--</span>
+                <h3>{{ task.code }} - {{task.title }} - {{ task.project.name }}</h3>
+                <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
+                <div class="progress"><div [ngClass]="task.playing ? 'bar active' : 'bar'" style='width: 40%'></div></div>
+              </ion-item>
+              <ion-item-options side="right">
+                <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
+                  Transferir</button>
+                <button ion-button color="danger" (click)="delete(task)"><ion-icon name="trash"></ion-icon>
+                  Apagar</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+          <div padding *ngIf="tasks && tasks.length === 0">
+            <p class="center light">Nenhuma tarefa aberta</p>
+          </div>
+        </div> 
+        <div *ngSwitchCase="'closed'">
+          <ion-list>
+            <ion-item *ngFor="let task of tasksClosed" (click)="showTask(task)">
+              <h3>#{{ task.id }} - {{task.title }}</h3>
+              <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
+            </ion-item>
+          </ion-list>
+          <div padding *ngIf="!tasksClosed">
+            <p class="center light">Nenhuma tarefa encerrada</p>
+          </div>
+        </div>
       </div>
     </div>
-    
-    <div *ngSwitchCase="'closed'">
-      <ion-list>
-        <ion-item *ngFor="let task of tasksClosed" (click)="showTask(task)">
-          <h3>#{{ task.id }} - {{task.title }}</h3>
-          <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
-        </ion-item>
-      </ion-list>
-      <div padding *ngIf="!tasksClosed">
-        <img class="mid center" src="/assets/imgs/chair.svg">
-        <p class="center light">Nenhuma tarefa encerrada</p>
-      </div>
+    <div *ngSwitchCase="'by'">
+      <p class="center light">Nenhuma aberta por mim</p>
     </div>
-
+    <div *ngSwitchCase="'all'">
+      <p class="center light">Nenhuma com a equipe</p>
+    </div>  
   </div>
+  
   <ion-fab showWhen="android" bottom right>
     <button (click)="newTask()" ion-fab><ion-icon name="add"></ion-icon></button>
   </ion-fab>

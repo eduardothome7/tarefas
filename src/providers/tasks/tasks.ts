@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Task } from '../../model/task';
 import { DateTime } from 'ionic-angular';
@@ -7,6 +7,11 @@ import { DateTime } from 'ionic-angular';
 export class TasksProvider {
   private API_URL = "http://localhost:3000";
   // private API_URL = "http://minhastarefasapiv1.herokuapp.com";
+	headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Accept': 'text/javascript',
+		'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJfbGV2ZWwiOiJ3b3JrZXIiLCJpYXQiOjE1MTMzMTM4ODEsImV4cCI6MTUxMzMxNzQ4M30.IYZ4BnjTZ3K9agI-UEkjVvyr1WvgorM97huMr1A6600'
+	});
 
   constructor(public http: HttpClient) {
     
@@ -25,10 +30,10 @@ export class TasksProvider {
 		});
   }
 
-  play(task_id: number){
-    return new Promise((resolve, reject) => {
+  play(task_id){
+		return new Promise((resolve, reject) => {
 			const url = `${this.API_URL}/tasks/play_pause`;
-      this.http.put(url, {id: task_id},{headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+      this.http.put(url, {id: task_id},{headers: this.headers})
         .subscribe((result :any) => {
           resolve(result);
         }, (error) => {

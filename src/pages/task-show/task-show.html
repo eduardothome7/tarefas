@@ -1,39 +1,72 @@
 <ion-header no-border>
   <ion-navbar color="primary">
-    <ion-title></ion-title>
+    <ion-title>{{ task.code }}</ion-title>
   </ion-navbar>
   <ion-toolbar class="info" padding color="primary">
     <ion-row>
       <ion-col text-center class="divider right">
-        <ion-icon name="calendar"></ion-icon>
         <p>Início</p>
-        <p>{{ task.start_at | date: 'dd/MM'}}</p>
+        <p><ion-icon name="calendar"></ion-icon> {{ task.start_at | date: 'dd/MM'}}</p>
       </ion-col>
       <ion-col text-center>
-        <ion-icon name="calendar"></ion-icon>
         <p>Entrega</p>
-        <p>{{ task.estimate_at | date: 'dd/MM'}}</p>
+        <p><ion-icon name="calendar"></ion-icon> {{ task.estimate_at | date: 'dd/MM'}}</p>
       </ion-col>
     </ion-row>
-    <div class="progress"><div class="bar"></div></div>
-    <ion-row>
-        <ion-col>
-          <p class="white"><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
-        </ion-col>
-        <ion-col>
-          <p class="white"><ion-icon name="bookmark"></ion-icon> {{ task.category.name }}</p>
-        </ion-col>
-      </ion-row>
+    <div class="progress"><div  [ngClass]="playing ? 'bar active' : 'bar'"></div></div>
+    <p text-center>
+        {{ task.worked_min }}/{{ task.estimate_min }} min
+    </p>  
+    <ion-segment [(ngModel)]="section">
+      <ion-segment-button value="description">
+        Descrição
+      </ion-segment-button>
+      <ion-segment-button value="comments">
+        Comentários
+      </ion-segment-button>
+      <ion-segment-button value="historics">
+        Histórico
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content fullscreen padding>
-  <h3>{{ task.title }}</h3>
-  <p>{{ task.description }}</p>
+  <div [ngSwitch]="section">
+    <div selected="true" *ngSwitchCase="'description'">
+      <ion-row>
+        <ion-col>
+          <ion-icon name="folder-open"></ion-icon> {{ task.project.name }}
+        </ion-col>
+        <ion-col>
+          <ion-icon name="bookmark"></ion-icon> {{ task.category.name }}
+        </ion-col>  
+      </ion-row>
+      <h5>{{ task.title }}</h5>
+      <p class="text">{{ task.description }}</p>
+      <p>Responsável: {{ task.user.name }}</p>
+    </div>
+    <div selected="true" *ngSwitchCase="'comments'">
+      <h5 text-center>Comentários</h5>
+    </div>
+    <div selected="true" *ngSwitchCase="'historics'">
+      <h5>Histórico</h5>
+      <ion-list>
+        <ion-item>
+          <p class="info">
+            Aberta em <strong>{{ task.created_at | date: 'dd/MM HH:mm' }}</strong>. 
+            Início em <strong>{{ task.start_at | date: 'dd/MM HH:mm' }}</strong>
+          </p>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div> 
   <ion-fab bottom right>
-    <button ion-fab color="{{ (!task.playing) ?  'secondary' : 'primary' }}" (click)="play()">
-      <ion-icon name="{{ (!task.playing) ?  'play' : 'pause' }}"></ion-icon>
+    <button *ngIf="canFinish()" ion-fab color="{{ (!playing) ?  'secondary' : 'primary' }}" (click)="play()">
+      <ion-icon name="{{ (!playing) ?  'play' : 'pause' }}"></ion-icon>
+    </button>
+    <button *ngIf="!canFinish()" ion-fab color="secondary" (click)="finish()">
+      <ion-icon name="checkmark"></ion-icon>
     </button>
   </ion-fab>
 </ion-content>

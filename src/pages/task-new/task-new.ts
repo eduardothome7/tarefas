@@ -1,4 +1,4 @@
-import { Component, stringify } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TasksProvider } from '../../providers/tasks/tasks';

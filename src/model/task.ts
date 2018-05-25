@@ -3,6 +3,7 @@ import { Historic } from "./historic";
 
 export class Task {
     id: number;
+    code: string;
     title: string;
     category: any;
     status: any;
@@ -11,6 +12,7 @@ export class Task {
     closed_at:DateTime;
     description: string;
     estimate_min: number;
+    worked_min: number;
     priority: number;
     project: any[];
     playing: boolean;

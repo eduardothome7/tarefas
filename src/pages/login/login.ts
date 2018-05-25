@@ -21,9 +21,7 @@ export class LoginPage {
               private provider: TasksProvider,
               private toast: ToastController,
               private _authProvider: AuthProvider,
-              private storage: Storage) {
-    
-    
+              private storage: Storage) {   
     this.todo = this.formBuilder.group({
       email: ['eduardo@hotmail.com', Validators.required],
       password: ['wqew12345', Validators.required]
@@ -35,25 +33,26 @@ export class LoginPage {
     this.autorize();
   }
 
-  async login(){
-    let data :any = [{email: this.todo.controls.email, password: this.todo.controls.password}];
+  login(){
+    let data = [{email: this.todo.controls.email, password: this.todo.controls.password}];
     
-    const result :any = await this._authProvider.login(data);
-
-    try {
-      console.log("login: "+result);
-      let session :SessionAuth = result;
-      console.log(session);
-      this.storage.set('local_session_auth', session);
-      this.navCtrl.push("TabsPage");
-    } catch(error){
-      console.log(error);
-    }
+    const result = this._authProvider.login(data)
+    .then((data) => {
+      console.log(data);
+      //   this.navCtrl.push("TabsPage");
+    })
+    .catch((err ) => {
+      console.log(err);
+      this.toast.create({
+        message: err.message
+      }).present();
+    });
   }
 
   autorize(){
     if(this.storage.get('local_session_auth')){
       this.navCtrl.push("TabsPage");
+      // setTimeout(() => this.splash = false, 4000);
     } else {
       setTimeout(() => this.splash = false, 4000);
     }    

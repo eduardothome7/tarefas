@@ -1,31 +1,6 @@
 page-task-show {
-    .progress {
-        margin-top: 4px;
-        background: darken(map-get($colors, primary), 14%);
-        width: 100%;
-        height: 5px;
-        border-radius: 3px; 
-        
-        .bar {
-            height: 100%;
-            width: 40%;
-            background: map-get($colors, secondary);
-        }
-    }
 
-    .info {
-        color: lighten(map-get($colors, primary), 28%);
-        // font-weight: bold;
-    }
-
-    
-    // ion-col.divider {
-        
-    // }
-   
-    // ion-row {}
-    ion-col.divider.right {
-        border-right: 2px solid lighten(map-get($colors, primary), 2%);
-    }
-    
+    ion-toolbar.toolbar-md-primary ion-segment-button, ion-toolbar.toolbar-ios-primary ion-segment-button {
+        color: darken(map-get($colors, primary), 28%) !important;
+    }    
 }
