@@ -11,7 +11,7 @@ import { AuthProvider } from '../../providers/session/auth';
 })
 export class TasksListPage {
 
-  tasks: Task[];
+  public tasks: Task[];
   tasksClosed: Task[];
   status :string;
   section :string;
@@ -28,6 +28,12 @@ export class TasksListPage {
     this.fetchAll();
     this.fetchAllClosed();
   }
+
+  ionViewDidEnter(){
+    console.log("recarrega");
+    this.fetchAll();
+    this.fetchAllClosed();
+  }
   
   async fetchAll(){
     const result :any = await this._provider.getAll('opened');
@@ -38,12 +44,12 @@ export class TasksListPage {
       console.log("Erro");
     }
   }
-  
+
   async fetchAllClosed(){
     const result :any = await this._provider.getAll('closed');
 
     try {
-      this.tasks = result;
+      this.tasksClosed = result;
     } catch (error) {
       console.log("Erro");
     }

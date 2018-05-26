@@ -12,6 +12,14 @@
       <ion-input type="text" formControlName="title"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label stacked><ion-icon name="person"></ion-icon> Responsável</ion-label>
+      <ion-select formControlName="user_id" placeholder="Quem irá trabalhar na tarefa?">
+        <ion-option *ngFor="let user of users" value="{{ user.id }}">
+          {{ user.name }} 
+        </ion-option>
+      </ion-select>
+    </ion-item>   
+    <ion-item> 
       <ion-label stacked><ion-icon name="folder-open"></ion-icon> Projeto</ion-label>
       <ion-select formControlName="project_id">
         <ion-option *ngFor="let project of projects" value="{{ project.id }}">
@@ -26,7 +34,7 @@
           {{ category.name }} 
         </ion-option>
       </ion-select>
-    </ion-item>  
+    </ion-item>     
     <ion-row> 
       <ion-col>
         <ion-item>

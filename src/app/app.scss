@@ -35,14 +35,35 @@ img.mid {
 img.center {
     margin-left: 20%;
 }
+ion-segment-button {
+    border-radius: 0 !important;
+    border-color: map-get($colors, primary);
+}
 ion-toolbar.toolbar-md-primary ion-segment-button {
     color: #fff !important;
 }
 ion-toolbar.toolbar-ios-primary ion-segment-button {
     color: #fff !important;
 }
+p {
+  overflow: inherit !important;
+  text-overflow: inherit !important;
+  white-space: normal !important;
+}
 p.white {
     color: #fff;
+}
+p {
+    &.danger {
+        color: map-get($colors, danger);
+    }
+}
+p.description {
+    font-size: 65%;
+}
+p.text {
+    background: map-get($colors, light);
+    padding: 0.68pc;
 }
 span.pulse {
     position: absolute;
@@ -50,6 +71,7 @@ span.pulse {
 }
 .progress {
     margin-top: 1.4pc;
+    margin-bottom: 1.4pc;
     width: 100%;
     border-radius: 3px;
     background: darken(map-get($colors , light), 4%);
@@ -57,10 +79,13 @@ span.pulse {
     .bar {
         background: darken(map-get($colors, light), 14%);
         height: 4px;
-        // width: 40%;
+        max-width: 100% !important;
         
         &.active {
             background: map-get($colors, secondary);
+        }
+        &.danger {
+            background: map-get($colors, danger);
         }
     }
 }

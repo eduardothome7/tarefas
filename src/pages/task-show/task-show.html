@@ -6,16 +6,19 @@
     <ion-row>
       <ion-col text-center class="divider right">
         <p>Início</p>
-        <p><ion-icon name="calendar"></ion-icon> {{ task.start_at | date: 'dd/MM'}}</p>
+        <p><ion-icon name="calendar" ios="ios-calendar-outline"></ion-icon> {{ task.start_at | date: 'dd/MM'}}</p>
       </ion-col>
       <ion-col text-center>
         <p>Entrega</p>
-        <p><ion-icon name="calendar"></ion-icon> {{ task.estimate_at | date: 'dd/MM'}}</p>
+        <p><ion-icon name="calendar" ios="ios-calendar-outline"></ion-icon> {{ task.estimate_at | date: 'dd/MM'}}</p>
       </ion-col>
     </ion-row>
-    <div class="progress"><div  [ngClass]="playing ? 'bar active' : 'bar'"></div></div>
-    <p text-center>
-        {{ task.worked_min }}/{{ task.estimate_min }} min
+    <div class="progress"><div [ngClass]="(task.estimate_min >= task.worked_min)  ? 'bar active' : 'bar danger'" [ngStyle]="{'width': ((task.worked_min/task.estimate_min) * 100)+'%'}"></div></div>
+    <p text-center [ngClass]="(task.estimate_min > task.worked_min)  ? ' ' : 'danger'">
+        <strong>{{ task.worked_min }}</strong>/{{ task.estimate_min }} min 
+        <ion-badge *ngIf="task.worked_min >= task.estimate_min" color="danger">
+          !
+        </ion-badge>
     </p>  
     <ion-segment [(ngModel)]="section">
       <ion-segment-button value="description">
@@ -47,25 +50,24 @@
       <p>Responsável: {{ task.user.name }}</p>
     </div>
     <div selected="true" *ngSwitchCase="'comments'">
-      <h5 text-center>Comentários</h5>
+      <h5>Comentários</h5>
     </div>
     <div selected="true" *ngSwitchCase="'historics'">
       <h5>Histórico</h5>
       <ion-list>
         <ion-item>
-          <p class="info">
-            Aberta em <strong>{{ task.created_at | date: 'dd/MM HH:mm' }}</strong>. 
-            Início em <strong>{{ task.start_at | date: 'dd/MM HH:mm' }}</strong>
+          <p class="text small">
+            Tarefa criada em <strong>{{ task.created_at | date: 'dd/MM HH:mm' }}</strong>
           </p>
         </ion-item>
       </ion-list>
     </div>
   </div> 
   <ion-fab bottom right>
-    <button *ngIf="canFinish()" ion-fab color="{{ (!playing) ?  'secondary' : 'primary' }}" (click)="play()">
+    <button *ngIf="!canFinish()" ion-fab color="{{ (!playing) ?  'secondary' : 'primary' }}" (click)="play()">
       <ion-icon name="{{ (!playing) ?  'play' : 'pause' }}"></ion-icon>
     </button>
-    <button *ngIf="!canFinish()" ion-fab color="secondary" (click)="finish()">
+    <button *ngIf="canFinish()" ion-fab color="secondary" (click)="finish()">
       <ion-icon name="checkmark"></ion-icon>
     </button>
   </ion-fab>

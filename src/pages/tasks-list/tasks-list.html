@@ -18,9 +18,6 @@
       <ion-segment-button value="by">
         Que abri
       </ion-segment-button>
-      <ion-segment-button value="all">
-        Equipe
-      </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -44,10 +41,18 @@
 
   <!-- FAKE -->
   <ion-list *ngIf="!tasks" class="fake">
-    <ion-item *ngFor="let i of [1,2,3,4,5]">
+    <ion-item *ngFor="let i of [1,2,3]">
       <h3></h3>
-      <p></p>
       <div class="progress"></div>
+      <p></p>
+      <ion-row>
+        <ion-col>
+          <p></p>
+        </ion-col>
+        <ion-col>
+          <p></p>
+        </ion-col>
+      </ion-row>
     </ion-item>
   </ion-list>
   <!--  -->
@@ -59,10 +64,17 @@
           <ion-list>
             <ion-item-sliding #item *ngFor="let task of tasks">
               <ion-item (click)="showTask(task)">
-                <span *ngIf="task.playing" class="pulse">--</span>
+                <div *ngIf="task.playing" class="top icon"><ion-icon name="timer"></ion-icon></div>
                 <h3>{{ task.code }} - {{task.title }} - {{ task.project.name }}</h3>
-                <p><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
-                <div class="progress"><div [ngClass]="task.playing ? 'bar active' : 'bar'" style='width: 40%'></div></div>
+                <div class="progress"><div [ngClass]="(task.estimate_min >= task.worked_min)  ? 'bar active' : 'bar danger'" [ngStyle]="{'width': ((task.worked_min/task.estimate_min) * 100)+'%'}"></div></div>
+                <ion-row>
+                  <ion-col>
+                    <p class="description"><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
+                  </ion-col>
+                  <ion-col text-end>
+                    <p class="description"><ion-icon name="calendar" ios="ios-calendar-outline"></ion-icon> {{ task.estimate_at | date: 'dd/MM' }}</p>
+                  </ion-col>
+                </ion-row>
               </ion-item>
               <ion-item-options side="right">
                 <button ion-button (click)="transfer(task)"> <ion-icon name="swap"></ion-icon>
@@ -79,8 +91,16 @@
         <div *ngSwitchCase="'closed'">
           <ion-list>
             <ion-item *ngFor="let task of tasksClosed" (click)="showTask(task)">
-              <h3>#{{ task.id }} - {{task.title }}</h3>
-              <p><ion-icon name="folder"></ion-icon> {{ task.project.name }}</p>
+              <h3>{{ task.code }} - {{task.title }}</h3>
+              <div class="progress"><div [ngClass]="(task.estimate_min <= task.worked_min ) ? 'bar active' : 'bar danger'" [ngStyle]="{'width': ((task.worked_min/task.estimate_min) * 100)+'%'}"></div></div>
+              <ion-row>
+                <ion-col>
+                  <p class="description"><ion-icon name="folder-open"></ion-icon> {{ task.project.name }}</p>
+                </ion-col>
+                <ion-col text-end>
+                  <p class="description"><ion-icon name="calendar" ios="ios-calendar-outline"></ion-icon> {{ task.estimate_at | date: 'dd/MM' }}</p>
+                </ion-col>
+              </ion-row>
             </ion-item>
           </ion-list>
           <div padding *ngIf="!tasksClosed">
@@ -92,9 +112,6 @@
     <div *ngSwitchCase="'by'">
       <p class="center light">Nenhuma aberta por mim</p>
     </div>
-    <div *ngSwitchCase="'all'">
-      <p class="center light">Nenhuma com a equipe</p>
-    </div>  
   </div>
   
   <ion-fab showWhen="android" bottom right>

@@ -1,4 +1,15 @@
 page-login {
+    // ion-content.login {
+    //    background: map-get($colors, primary) !important;
+    //    overflow: hidden !important;
+    // } 
+      
+    ion-img {
+        background: transparent;
+        width: 115px;
+        height: 110px;
+        margin-left: 30%;
+    }
     #custom-overlay {
         position: fixed;
         top: 0;

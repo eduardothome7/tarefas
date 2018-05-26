@@ -29,33 +29,37 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    this.storage.clear();
     this.autorize();
   }
 
   login(){
-    let data = [{email: this.todo.controls.email, password: this.todo.controls.password}];
+    let login = {
+              email: this.todo.controls.email, 
+              password: this.todo.controls.password, 
+              authToken: "VkZkV01WVXliNDBXVmRXYVZwWDQyWTIwNWVHUlhWblphUjFZeVlWaE9iRnBIUm5OYVYyUjVXbGN4Y0dKNlVUTk9lbU4wVUYzMjEyM1RXbz0="};    
     
-    const result = this._authProvider.login(data)
+    const result = this._authProvider.login(login)
     .then((data) => {
       console.log(data);
-      //   this.navCtrl.push("TabsPage");
-    })
-    .catch((err ) => {
+    }).catch((err) => {
       console.log(err);
-      this.toast.create({
-        message: err.message
-      }).present();
+      // this.toast.create({
+      //   message: err.message,
+      //   duration: 3000
+      // }).present();
     });
+    this.navCtrl.push("TabsPage");
   }
 
   autorize(){
-    if(this.storage.get('local_session_auth')){
-      this.navCtrl.push("TabsPage");
-      // setTimeout(() => this.splash = false, 4000);
-    } else {
+    // if(this.storage.get('local_session_auth')){
+    //   setTimeout(() => this.splash = false, 2000);
+    //   this.navCtrl.push("TabsPage");
+    // } else {
+    //   this.navCtrl.push("TabsPage");
+    //   setTimeout(() => this.splash = false, 4000);
+    // }    
       setTimeout(() => this.splash = false, 4000);
-    }    
   }
 }
 

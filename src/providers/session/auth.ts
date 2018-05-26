@@ -5,31 +5,32 @@ import { User } from '../../model/user';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
+
 @Injectable()
 export class AuthProvider {
-  private API_URL = "http://localhost:3000";
+  private API_URL = "https://apitarefasv1.herokuapp.com";
 
+  headers = new HttpHeaders({
+		'Content-Type': 'application/json; charset=utf-8',
+		'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJfbGV2ZWwiOiJ3b3JrZXIiLCJpYXQiOjE1MTMzMTM4ODEsImV4cCI6MTUxMzMxNzQ4M30.IYZ4BnjTZ3K9agI-UEkjVvyr1WvgorM97huMr1A6600'
+  });
+  
   constructor(public http: HttpClient, private storage :Storage) {
     
   }
-  login(data){
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'text/javascript',
-      'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsInVzZXJfbGV2ZWwiOiJ3b3JrZXIiLCJpYXQiOjE1MTMzMTM4ODEsImV4cCI6MTUxMzMxNzQ4M30.IYZ4BnjTZ3K9agI-UEkjVvyr1WvgorM97huMr1A6600'
-    });
-    
+  login(login){
     return new Promise((resolve, reject) => {
-      const url = this.API_URL + '/auth/sign_in';
-      
-      this.http.post(url, {"email": data.email, "password": data.password}, {headers:headers})
-        .subscribe((result: any) => {
-          resolve(result);
+      const url = `${this.API_URL}/sessions/sign_in.json`;
+      this.http.post(url, login, {headers: this.headers})
+        // .map(res => res)	  
+        .subscribe((data) => {
+          resolve(data);
         }, (error) => {
           reject(error);
       });
-    });
+    });   
   }
+
   getSession(){
     return this.storage.get('local_session_auth')
   }

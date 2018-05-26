@@ -1,12 +1,13 @@
 <div id="custom-overlay" [style.display]="splash ? 'flex': 'none'">
   <div class="flb">
     <div class="Aligner-item Aligner-item--top"></div>
-    <img src="assets/logo.svg">
+    <img src="assets/imgs/logo.svg">
     <div class="Aligner-item Aligner-item--bottom"></div>
   </div>
 </div>
 
-<ion-content padding>
+<ion-content class="login" padding no-bounce>
+  <ion-img width="80" height="80" src="assets/imgs/logo.svg"></ion-img>
   <form [formGroup]="todo" (ngSubmit)="login()">
     <ion-item>
       <ion-label stacked>Email</ion-label>
@@ -16,6 +17,6 @@
       <ion-label stacked> Senha</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
     </ion-item>
-    <button ion-button block type="submit" [disabled]="!todo.valid">Entrar</button>
+    <button ion-button color="primary" block type="submit" [disabled]="!todo.valid">Entrar</button>
   </form>
 </ion-content>

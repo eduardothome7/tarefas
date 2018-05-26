@@ -1,3 +1,22 @@
 page-tasks-list {
-   
+    ion-list {
+        ion-item {
+            h3 {
+                font-weight: bold !important;
+            }
+        }
+    }
+    .top {
+        height: 25px;
+        width: 100%;
+        position: relative;
+
+        ion-icon {
+            position: absolute;
+            right: 7px;
+            color: #8e44ad;
+            font-size: 85%;
+        }
+    }
+        
 }
